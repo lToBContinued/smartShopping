@@ -115,7 +115,11 @@ export default {
         this.$toast('请输入正确的短信验证码')
         return
       }
-      await codeLogin(this.mobile, this.msgCode)
+
+      console.log('发送登录请求')
+
+      const res = await codeLogin(this.mobile, this.msgCode)
+      this.$store.commit('user/setUserInfo', res.data)
       this.$toast('登录成功')
       this.$router.push('/')
     }
