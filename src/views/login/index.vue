@@ -89,7 +89,7 @@ export default {
 
       // 当前目前没有定时器开着，且 totalSecond 和 Second 一致，才可以倒计时
       if (!this.timer && this.totalSecond === this.second) {
-        // 发送请求
+        // 发送请求（预期：希望如果响应的 status 不是200，最好抛出一个 promise 错误，await 只会等待成功的 promise）
         await getMessageCode(this.picCode, this.picKey, this.mobile)
         this.$toast('验证法发送成功，注意查收')
 
@@ -116,6 +116,8 @@ export default {
         return
       }
       await codeLogin(this.mobile, this.msgCode)
+      this.$toast('登录成功')
+      this.$router.push('/')
     }
   }
 }

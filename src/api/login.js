@@ -19,7 +19,6 @@ export const getMessageCode = (captchaCode, captchaKey, mobile) => {
 
 // 登录接口
 export const codeLogin = (mobile, smsCode) => {
-  console.log('发送登录请求')
   return request.post('/passport/login', {
     form: {
       isParty: false,
