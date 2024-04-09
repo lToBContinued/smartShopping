@@ -1,0 +1,48 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+input,
+textarea {
+  outline: 0;
+  border: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  line-height: normal;
+}
+a {
+  text-decoration: none;
+}
+/*去除未被访问的a标签的下划线*/
+a:link {
+  text-decoration: none;
+}
+/*去除已经被访问过的a标签的下划线*/
+a:visited {
+  text-decoration: none;
+}
+/*去除鼠标悬停时的a标签的下划线*/
+a:hover {
+  text-decoration: none;
+}
+/*去除正在点击的a标签的下划线（鼠标按下，尚未松开）*/
+a:active {
+  text-decoration: none;
+}
+/*去除获得焦点的a标签的下划线（被鼠标点击过）*/
+a:focus {
+  text-decoration: none;
+}
+.text-ellipsis-2 {
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+.van-nav-bar .van-nav-bar__arrow {
+  color: #333;
+}
+/*# sourceMappingURL=common.css.map */
