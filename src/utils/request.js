@@ -3,7 +3,7 @@ import { Toast } from 'vant'
 // 创建axios实例，将来对创建出来的实力进行自定义配置
 // 好处：不会污染原来的axios实例
 const instance = axios.create({
-  baseURL: 'http://cba.itlike.com/public/index.php?s=/api/',
+  baseURL: 'http://smart-shop.itheima.net/index.php?s=/api',
   timeout: 5000
 })
 

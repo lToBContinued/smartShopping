@@ -8,18 +8,18 @@
 
     <!--轮播图-->
     <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
-      <van-swipe-item><img src="@/assets/banner1.jpg" alt=""></van-swipe-item>
-      <van-swipe-item><img src="@/assets/banner2.jpg" alt=""></van-swipe-item>
-      <van-swipe-item><img src="@/assets/banner3.jpg" alt=""></van-swipe-item>
+      <van-swipe-item v-for="item in bannerList" :key="item.imgUrl">
+        <img :src="item.imgUrl" alt="">
+      </van-swipe-item>
     </van-swipe>
 
     <!--商品分类-->
     <van-grid :border="false" :column-num="5">
       <van-grid-item
-        v-for="value in 10"
-        :key="value"
-        icon="http://cba.itlike.com/public/uploads/10001/20230320/58a7c1f62df4cb1eb47fe83ff0e566e6.png"
-        text="新品首发"
+        v-for="item in navList"
+        :key="item.imgUrl"
+        :icon="item.imgUrl"
+        :text="item.text"
         @click="$router.push('/category')"
       />
     </van-grid>
@@ -32,7 +32,7 @@
     <div class="guess">
       <p class="guess-title">—— 猜你喜欢 ——</p>
       <div class="goods-list">
-        <GoodsItem v-for="item in 10" :key="item"></GoodsItem>
+        <GoodsItem v-for="item in proList" :key="item.goods_id" :item="item"></GoodsItem>
       </div>
     </div>
   </div>
@@ -40,16 +40,26 @@
 
 <script>
 import GoodsItem from '@/components/GoodsItem.vue'
+import { getHomeData } from '@/api/home'
 
 export default {
   name: 'homeIndex',
   data () {
     return {
-      value: ''
+      value: '',
+      bannerList: [], // 轮播
+      navList: [], // 导航
+      proList: [] // 商品
     }
   },
   components: {
     GoodsItem
+  },
+  async created () {
+    const { data: { pageData } } = await getHomeData()
+    this.bannerList = pageData.items[1].data
+    this.navList = pageData.items[3].data
+    this.proList = pageData.items[6].data
   }
 }
 </script>
