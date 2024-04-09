@@ -2,6 +2,7 @@
   <div class="search">
     <!--导航栏-->
     <van-nav-bar
+      fixed
       title="商品搜索"
       left-arrow
       @click-left="$router.go(-1)"
@@ -40,7 +41,6 @@
 <script>
 
 import { getHistoryList, setHistoryList } from '@/utils/storage'
-import { Toast } from 'vant'
 
 export default {
   name: 'SearchIndex',
@@ -52,11 +52,6 @@ export default {
   },
   methods: {
     goSearch (key) {
-      this.search = key
-      if (!this.search.trim()) {
-        Toast('搜索内容不能为空')
-        return
-      }
       const index = this.history.indexOf(key)
       if (index !== -1) {
         // 存在相同的项，将原有关键字移除
@@ -78,6 +73,8 @@ export default {
 
 <style scoped lang="less">
 .search {
+  padding-top: 46px;
+
   ::v-deep .van-nav-bar__title {
     font-weight: 700;
   }
