@@ -10,24 +10,28 @@
 
     <!--搜索框-->
     <form action="/">
-      <van-search v-model="value" show-action placeholder="请输入搜索关键词">
+      <van-search v-model="search" show-action placeholder="请输入搜索关键词" autofocus>
         <template #action>
-          <div>搜索</div>
+          <div @click="goSearch(search)">搜索</div>
         </template>
       </van-search>
     </form>
 
     <!--搜索历史-->
-    <div class="search-history">
+    <div class="search-history" v-if="history.length > 0">
       <div class="title">
         <span>最近搜索</span>
-        <van-icon name="delete-o" size="16"/>
+        <van-icon @click="clearHistory" name="delete-o" size="16"/>
       </div>
       <div class="list">
-        <div class="list-item" @click="$router.push('/searchlist')">炒锅炒锅炒锅</div>
-        <div class="list-item" @click="$router.push('/searchlist')">电视机</div>
-        <div class="list-item" @click="$router.push('/searchlist')">冰箱</div>
-        <div class="list-item" @click="$router.push('/searchlist')">手机</div>
+        <div
+          v-for="item in history"
+          :key="item"
+          class="list-item"
+          @click="goSearch(item)"
+        >
+          {{ item }}
+        </div>
       </div>
     </div>
   </div>
@@ -35,14 +39,40 @@
 
 <script>
 
+import { getHistoryList, setHistoryList } from '@/utils/storage'
+import { Toast } from 'vant'
+
 export default {
   name: 'SearchIndex',
   data () {
     return {
-      value: ''
+      search: '', // 输入框的内容
+      history: getHistoryList() // 历史记录
     }
   },
-  methods: {}
+  methods: {
+    goSearch (key) {
+      this.search = key
+      if (!this.search.trim()) {
+        Toast('搜索内容不能为空')
+        return
+      }
+      const index = this.history.indexOf(key)
+      if (index !== -1) {
+        // 存在相同的项，将原有关键字移除
+        this.history.splice(index, 1)
+      }
+      this.history.unshift(key)
+      setHistoryList(this.history)
+      // 跳转到搜索列表页
+      this.$router.push(`/searchlist?search=${key}`)
+    },
+
+    clearHistory () {
+      this.history = []
+      setHistoryList([])
+    }
+  }
 }
 </script>
 

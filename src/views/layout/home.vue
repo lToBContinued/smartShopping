@@ -4,7 +4,7 @@
     <van-nav-bar title="智慧商城" fixed></van-nav-bar>
 
     <!--搜索框-->
-    <van-search v-model="value" placeholder="请输入搜索关键词" shape="round"/>
+    <van-search @focus="$router.push('/search')" placeholder="请输入搜索关键词" shape="round"/>
 
     <!--轮播图-->
     <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
@@ -46,7 +46,6 @@ export default {
   name: 'homeIndex',
   data () {
     return {
-      value: '',
       bannerList: [], // 轮播
       navList: [], // 导航
       proList: [] // 商品
