@@ -7,6 +7,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {},
   getters: {
+    // 获取用户token
     token (state) {
       return state.user.userInfo.token
     }

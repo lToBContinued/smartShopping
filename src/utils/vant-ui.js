@@ -13,7 +13,8 @@ import {
   Grid,
   GridItem,
   Icon,
-  ActionSheet
+  ActionSheet,
+  Dialog
 } from 'vant'
 
 // 按需导入
@@ -31,3 +32,4 @@ Vue.use(Grid)
 Vue.use(GridItem)
 Vue.use(Icon)
 Vue.use(ActionSheet)
+Vue.use(Dialog)

@@ -121,7 +121,12 @@ export default {
       const res = await codeLogin(this.mobile, this.msgCode)
       this.$store.commit('user/setUserInfo', res.data)
       this.$toast('登录成功')
-      this.$router.push('/')
+
+      // 进行判断，看地址栏有无回调地址
+      // 1.有 => 说明是其他页面拦截到登录页面来的，需要会跳
+      // 2.没有 => 正常去首页
+      const url = this.$route.query.backUrl || '/'
+      this.$router.replace(url)
     }
   }
 }

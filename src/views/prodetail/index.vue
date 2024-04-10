@@ -104,7 +104,7 @@
 
         <!--有库存才显示提交按钮-->
         <div class="showbtn" v-if="detail.stock_total > 0">
-          <div class="btn" v-if="mode === 'cart'">加入购物车</div>
+          <div class="btn" v-if="mode === 'cart'" @click="addCart">加入购物车</div>
           <div class="btn now" v-else>立刻购买</div>
         </div>
 
@@ -174,7 +174,6 @@ export default {
       } = await getProComments(this.$route.params.id, 3)
       this.comment = list
       this.total = total
-      console.log(await getProComments(this.$route.params.id, 3))
     },
 
     addFn () {
@@ -185,6 +184,33 @@ export default {
     buyFn () {
       this.mode = 'buyNow'
       this.showPannel = true
+    },
+
+    addCart () {
+      // 判断token是否存在
+      // 1.如果token不存在，弹确认框
+      // 2.如果token存在，继续请求操作
+      if (!this.$store.getters.token) {
+        // 弹确认框
+        this.$dialog.confirm({
+          title: '温馨提示',
+          message: '此时需要先登录才能继续操作哦',
+          confirmButtonText: '去登录',
+          cancelButtonText: '再逛逛'
+        }).then(() => {
+          // 如果希望跳转到登录，并且登录后能会跳回来，就需要在跳转时携带参数（当前路径的地址）
+          console.log(this.$route.fullPath)
+          this.$router.replace({
+            path: '/login',
+            query: {
+              backUrl: this.$route.fullPath
+            }
+          })
+        }).catch(() => {
+        })
+        return
+      }
+      console.log('正常请求')
     }
   }
 }
