@@ -71,6 +71,7 @@
         <span>首页</span>
       </div>
       <div class="icon-cart">
+        <span v-if="cartTotal > 0" class="num">{{ cartTotal }}</span>
         <van-icon name="shopping-cart-o"/>
         <span>购物车</span>
       </div>
@@ -118,6 +119,7 @@
 import { getProComments, getProDetail } from '@/api/product'
 import defaultImg from '@/assets/default-avatar.png'
 import CountBox from '@/components/CountBox'
+import { addCart } from '@/api/cart'
 
 export default {
   name: 'ProDetail',
@@ -136,7 +138,8 @@ export default {
       defaultImg, // 默认头像
       showPannel: false, // 控制弹层的显示
       mode: 'cart', // 标记弹层的状态
-      addCount: 1 // 数字框绑定的数字
+      addCount: 1, // 数字框绑定的数字
+      cartTotal: 0 // 购物车中商品总数
     }
   },
 
@@ -186,7 +189,8 @@ export default {
       this.showPannel = true
     },
 
-    addCart () {
+    // 用户未登录时添加到购物车的弹窗提示
+    async addCart () {
       // 判断token是否存在
       // 1.如果token不存在，弹确认框
       // 2.如果token存在，继续请求操作
@@ -210,7 +214,12 @@ export default {
         })
         return
       }
-      console.log('正常请求')
+
+      const { data } = await addCart(this.goodsId, this.addCount, this.detail.skuList[0].goods_sku_id)
+      this.cartTotal = data.cartTotal
+      this.$toast('加入购物车成功')
+      this.showPannel = false
+      console.log(this.cartTotal)
     }
   }
 }
@@ -354,11 +363,26 @@ export default {
     align-items: center;
 
     .icon-home, .icon-cart {
+      position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       font-size: 14px;
+
+      .num {
+        position: absolute;
+        top: -2px;
+        right: 0;
+        z-index: 999;
+        min-width: 16px;
+        padding: 0 4px;
+        background-color: red;
+        border-radius: 40%;
+        color: #fff;
+        font-size: 12px;
+        text-align: center;
+      }
 
       .van-icon {
         font-size: 24px;
