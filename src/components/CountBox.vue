@@ -37,7 +37,9 @@ export default {
       }
       this.$emit('input', num)
     }
-  }
+  },
+
+  computed: {}
 }
 </script>
 

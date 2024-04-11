@@ -14,7 +14,8 @@ import {
   GridItem,
   Icon,
   ActionSheet,
-  Dialog
+  Dialog,
+  Checkbox
 } from 'vant'
 
 // 按需导入
@@ -33,3 +34,4 @@ Vue.use(GridItem)
 Vue.use(Icon)
 Vue.use(ActionSheet)
 Vue.use(Dialog)
+Vue.use(Checkbox)
