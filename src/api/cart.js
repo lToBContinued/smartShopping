@@ -32,3 +32,14 @@ export const changeCount = (goodsId, goodsNum, goodsSkuId) => {
     }
   })
 }
+
+// 删除购物车商品
+export const delSelect = (cartIds) => {
+  return request({
+    url: '/cart/clear',
+    method: 'POST',
+    data: {
+      cartIds
+    }
+  })
+}

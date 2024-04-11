@@ -11,7 +11,7 @@
 
       <div class="form">
         <div class="form-item">
-          <input v-model="mobile" type="number" class="inp" maxlength="11" placeholder="请输入手机号码">
+          <input v-model="mobile" type="text" class="inp" maxlength="11" placeholder="请输入手机号码">
         </div>
         <div class="form-item">
           <input v-model="picCode" type="text" class="inp" maxlength="5" placeholder="请输入图形验证码">
@@ -100,7 +100,7 @@ export default {
           if (this.second <= 0) {
             clearInterval(this.timer)
             this.timer = null // 重置定时器id
-            this.second = this.totalSecond // 定时器秒数归为
+            this.second = this.totalSecond // 定时器秒数归位
           }
         }, 1000)
       }
@@ -116,8 +116,6 @@ export default {
         return
       }
 
-      console.log('发送登录请求')
-
       const res = await codeLogin(this.mobile, this.msgCode)
       this.$store.commit('user/setUserInfo', res.data)
       this.$toast('登录成功')
@@ -126,7 +124,7 @@ export default {
       // 1.有 => 说明是其他页面拦截到登录页面来的，需要会跳
       // 2.没有 => 正常去首页
       const url = this.$route.query.backUrl || '/'
-      this.$router.replace(url)
+      this.$router.replace(url) // 直接替换页面，不保留历史记录
     }
   }
 }
