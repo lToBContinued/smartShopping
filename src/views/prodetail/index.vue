@@ -79,7 +79,7 @@
       <div @click="buyFn" class="btn-buy">立刻购买</div>
     </div>
 
-    <!--加入购物车的弹层-->
+    <!--加入购物车/立即购买公用的弹层-->
     <van-action-sheet v-model="showPannel" :title="mode === 'cart' ? '加入购物车' : '立刻购买'">
       <div class="product">
         <div class="product-title">
@@ -106,7 +106,7 @@
         <!--有库存才显示提交按钮-->
         <div class="showbtn" v-if="detail.stock_total > 0">
           <div class="btn" v-if="mode === 'cart'" @click="addCart">加入购物车</div>
-          <div class="btn now" v-else>立刻购买</div>
+          <div class="btn now" v-else @click="goBuyNow">立刻购买</div>
         </div>
 
         <div class="btn-none" v-else>该商品已抢完</div>
@@ -120,9 +120,11 @@ import { getProComments, getProDetail } from '@/api/product'
 import defaultImg from '@/assets/default-avatar.png'
 import CountBox from '@/components/CountBox'
 import { addCart } from '@/api/cart'
+import loginConfirm from '@/mixins/loginConfirm'
 
 export default {
   name: 'ProDetail',
+  mixins: [loginConfirm],
 
   components: {
     CountBox
@@ -191,27 +193,7 @@ export default {
 
     // 用户未登录时添加到购物车的弹窗提示
     async addCart () {
-      // 判断token是否存在
-      // 1.如果token不存在，弹确认框
-      // 2.如果token存在，继续请求操作
-      if (!this.$store.getters.token) {
-        // 弹确认框
-        this.$dialog.confirm({
-          title: '温馨提示',
-          message: '此时需要先登录才能继续操作哦',
-          confirmButtonText: '去登录',
-          cancelButtonText: '再逛逛'
-        }).then(() => {
-          // 如果希望跳转到登录，并且登录后能会跳回来，就需要在跳转时携带参数（当前路径的地址）
-          console.log(this.$route.fullPath)
-          this.$router.replace({
-            path: '/login',
-            query: {
-              backUrl: this.$route.fullPath
-            }
-          })
-        }).catch(() => {
-        })
+      if (this.loginConfirm()) {
         return
       }
 
@@ -220,6 +202,24 @@ export default {
       this.$toast('加入购物车成功')
       this.showPannel = false
       console.log(this.cartTotal)
+    },
+
+    // 立即购买
+    goBuyNow () {
+      // 未登录处理：需要弹出确认框，需要登录才能继续
+      if (this.loginConfirm()) {
+        return
+      }
+
+      this.$router.push({
+        path: '/pay',
+        query: {
+          mode: 'buyNow',
+          goodsId: this.goodsId,
+          goodsSkuId: this.detail.skuList[0].goods_sku_id,
+          goodsNum: this.addCount
+        }
+      })
     }
   }
 }

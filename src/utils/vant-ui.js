@@ -15,7 +15,9 @@ import {
   Icon,
   ActionSheet,
   Dialog,
-  Checkbox
+  Checkbox,
+  Tab,
+  Tabs
 } from 'vant'
 
 // 按需导入
@@ -35,3 +37,5 @@ Vue.use(Icon)
 Vue.use(ActionSheet)
 Vue.use(Dialog)
 Vue.use(Checkbox)
+Vue.use(Tab)
+Vue.use(Tabs)
