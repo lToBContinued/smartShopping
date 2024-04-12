@@ -24,17 +24,17 @@
       共{{ item.total_num }}件商品，总金额 ¥{{ item.total_price }}
     </div>
     <div class="actions">
-      <span v-if="false">立刻付款</span>
-      <span v-if="true" @click="handelDelOrder(item.order_id)">申请取消</span>
-      <span v-if="false">确认收货</span>
-      <span v-if="false">评价</span>
+      <span v-if="flag === 'payment'">立刻付款</span>
+      <span v-if="flag === 'all'" @click="handelDelOrder(item.order_id)">申请取消</span>
+      <span v-if="flag === 'received'" @click="handelConfirmReceived(item.order_id)">确认收货</span>
+      <span v-if="flag === 'comment'">评价</span>
     </div>
   </div>
 </template>
 
 <script>
 import { Toast } from 'vant'
-import { delOrder } from '@/api/order'
+import { confirmReceived, delOrder } from '@/api/order'
 
 export default {
   name: 'myOrderIndex',
@@ -44,12 +44,22 @@ export default {
       default: () => {
         return {}
       }
+    },
+    flag: {
+      type: String,
+      default: () => {
+        return 'all'
+      }
     }
   },
   methods: {
     async handelDelOrder (orderId) {
-      await delOrder(orderId)
-      Toast('订单已取消')
+      const res = await delOrder(orderId)
+      Toast(res.message)
+    },
+    async handelConfirmReceived (orderId) {
+      const res = await confirmReceived(orderId)
+      Toast(res.message)
     }
   }
 }

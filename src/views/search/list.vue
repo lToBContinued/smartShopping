@@ -24,9 +24,9 @@
 
     <!--排序选项-->
     <div class="sort-btns">
-      <div class="sort-item">综合</div>
-      <div class="sort-item">销量</div>
-      <div class="sort-item">价格</div>
+      <div class="sort-item" @click="changeSortMode('all')">综合</div>
+      <div class="sort-item" @click="changeSortMode('sales')">销量</div>
+      <div class="sort-item" @click="changeSortMode('price')">价格</div>
     </div>
 
     <div class="good-list">
@@ -44,7 +44,8 @@ export default {
   data () {
     return {
       page: 1,
-      proList: []
+      proList: [],
+      sortPrice: 0
     }
   },
   components: {
@@ -56,13 +57,30 @@ export default {
       return this.$route.query.search
     }
   },
+
   async created () {
+    // 获取商品列表
     const { data: { list } } = await getProList({
       categoryId: this.$route.query.categoryId,
       goodsName: this.querySearch,
       page: this.page
     })
     this.proList = list.data
+  },
+
+  methods: {
+    // 更换排序方式
+    async changeSortMode (mode) {
+      this.sortPrice = 1 - this.sortPrice
+      const { data: { list } } = await getProList({
+        categoryId: this.$route.query.categoryId,
+        goodsName: this.querySearch,
+        page: this.page,
+        sortType: mode,
+        sortPrice: 1 - this.sortPrice
+      })
+      this.proList = list.data
+    }
   }
 }
 </script>

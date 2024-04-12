@@ -55,3 +55,14 @@ export const delOrder = (orderId) => {
     }
   })
 }
+
+// 确认收货
+export const confirmReceived = (orderId) => {
+  return request({
+    url: '/order/receipt',
+    method: 'POST',
+    data: {
+      orderId
+    }
+  })
+}

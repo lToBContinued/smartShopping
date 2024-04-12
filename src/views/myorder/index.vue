@@ -10,7 +10,7 @@
       <van-tab name="comment" title="待评价"></van-tab>
     </van-tabs>
 
-    <OrderListItem v-for="item in list" :key="item.order_id" :item="item"></OrderListItem>
+    <OrderListItem v-for="item in list" :key="item.order_id" :item="item" :flag="active"></OrderListItem>
   </div>
 </template>
 
@@ -33,6 +33,7 @@ export default {
   },
 
   methods: {
+    // 获取订单列表
     async getOrderList () {
       const { data: { list } } = await getMyOrderList(this.active, this.page)
       list.data.forEach(item => {
