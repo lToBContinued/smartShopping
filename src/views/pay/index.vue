@@ -114,8 +114,8 @@ export default {
   },
 
   async created () {
-    this.getAddressList()
-    this.getOrderList()
+    await this.getAddressList()
+    await this.getOrderList()
   },
 
   methods: {

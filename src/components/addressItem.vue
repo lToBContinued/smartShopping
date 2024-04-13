@@ -1,20 +1,21 @@
 <template>
   <div class="addressItem">
-    <div class="county">{{ countyAddress }}</div>
-    <div class="detail">{{ list.detail }}</div>
-    <div class="name">{{ list.name }}
-      <span class="phone">{{ list.phone }}</span>
-    </div>
-    <van-icon name="edit" class="edit"/>
+    <div class="county">{{ getRegion }}</div>
+    <div class="detail">{{ item.detail }}</div>
+    <span class="name">{{ item.name }}</span>&nbsp;
+    <span class="phone">{{ item.phone }}</span>
+    <van-icon name="edit" class="edit" size="20" @click="goEditAddress"/>
+    <van-icon name="delete-o" class="del" size="20" @click="delAddress(item.address_id)"/>
     <div class="line"></div>
   </div>
 </template>
 
 <script>
+
 export default {
   name: 'addressItem',
   props: {
-    list: {
+    item: {
       type: Object,
       default: () => {
         return {}
@@ -22,15 +23,24 @@ export default {
     }
   },
   computed: {
-    countyAddress () {
-      const {
-        region: {
-          city,
-          province,
-          region
-        }
-      } = this.list
-      return province + city + region
+    getRegion () {
+      return this.item.region.province + this.item.region.city + this.item.region.region
+    }
+  },
+  methods: {
+    async delAddress (addressId) {
+      console.log(addressId)
+      this.$dialog.confirm({
+        title: '温馨提示',
+        message: '确认要删除吗'
+      }).then(() => {
+        this.$store.dispatch('address/delAddressAction', addressId)
+      }).catch(() => {
+      })
+    },
+
+    goEditAddress () {
+      this.$router.push('/editAddress')
     }
   }
 }
@@ -61,6 +71,13 @@ export default {
     position: absolute;
     top: 50%;
     right: 12px;
+    transform: translateY(-50%);
+  }
+
+  .del {
+    position: absolute;
+    top: 50%;
+    right: 46px;
     transform: translateY(-50%);
   }
 

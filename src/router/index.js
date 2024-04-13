@@ -1,20 +1,20 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '@/store'
 import Login from '@/views/login/index.vue'
 import Layout from '@/views/layout/index.vue'
+import Home from '@/views/layout/home.vue'
+import Category from '@/views/layout/category.vue'
+import Cart from '@/views/layout/cart.vue'
+import User from '@/views/layout/user.vue'
 import Search from '@/views/search/index.vue'
 import SearchList from '@/views/search/list.vue'
 import Prodetail from '@/views/prodetail/index.vue'
 import Pay from '@/views/pay/index.vue'
 import Myorder from '@/views/myorder/index.vue'
 import Address from '@/views/address/address.vue'
-
-import Home from '@/views/layout/home.vue'
-import Category from '@/views/layout/category.vue'
-import Cart from '@/views/layout/cart.vue'
-import User from '@/views/layout/user.vue'
-
-import store from '@/store'
+import editAddress from '@/views/address/editAddress.vue'
+import addAddress from '@/views/address/addAddress.vue'
 
 Vue.use(VueRouter)
 
@@ -71,6 +71,14 @@ const router = new VueRouter({
     {
       path: '/address',
       component: Address
+    },
+    {
+      path: '/editaddress',
+      component: editAddress
+    },
+    {
+      path: '/addaddress',
+      component: addAddress
     }
   ]
 })

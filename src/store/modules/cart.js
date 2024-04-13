@@ -23,7 +23,10 @@ export default {
         item.isChecked = flag
       })
     },
-    changeCount (state, { goodsId, goodsNum }) {
+    changeCount (state, {
+      goodsId,
+      goodsNum
+    }) {
       const goods = state.cartList.find(item => item.goods_id === goodsId)
       goods.goods_num = goodsNum
     }
@@ -37,6 +40,7 @@ export default {
       })
       context.commit('setCartList', data.list)
     },
+
     async changeCountAction (context, obj) {
       const {
         goodsNum,
@@ -51,13 +55,13 @@ export default {
       // 再同步到后台
       await changeCount(goodsId, goodsNum, goodsSkuId)
     },
+
     // 删除购物车数据
     async delSelect (context) {
       const selectId = context.getters.selCartList.map(item => item.id)
       delSelect(selectId)
       Toast('删除成功')
-
-      // 删除后拉去最新的购物车数据
+      // 删除后拉取最新的购物车数据
       await context.dispatch('getCartAction')
     }
   },
