@@ -17,7 +17,9 @@ import {
   Dialog,
   Checkbox,
   Tab,
-  Tabs
+  Tabs,
+  List,
+  Cell
 } from 'vant'
 
 // 按需导入
@@ -39,3 +41,5 @@ Vue.use(Dialog)
 Vue.use(Checkbox)
 Vue.use(Tab)
 Vue.use(Tabs)
+Vue.use(List)
+Vue.use(Cell)

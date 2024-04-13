@@ -7,6 +7,7 @@ import SearchList from '@/views/search/list.vue'
 import Prodetail from '@/views/prodetail/index.vue'
 import Pay from '@/views/pay/index.vue'
 import Myorder from '@/views/myorder/index.vue'
+import Address from '@/views/address/address.vue'
 
 import Home from '@/views/layout/home.vue'
 import Category from '@/views/layout/category.vue'
@@ -66,6 +67,10 @@ const router = new VueRouter({
     {
       path: '/myorder',
       component: Myorder
+    },
+    {
+      path: '/address',
+      component: Address
     }
   ]
 })
