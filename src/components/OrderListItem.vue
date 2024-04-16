@@ -25,8 +25,8 @@
     </div>
     <div class="actions">
       <span v-if="flag === 'payment'">立刻付款</span>
-      <span v-if="flag === 'all'" @click="handelDelOrder(item.order_id)">申请取消</span>
-      <span v-if="flag === 'received'" @click="handelConfirmReceived(item.order_id)">确认收货</span>
+      <span v-if="flag === 'all'" @click="cancelOrder(item.order_id)">申请取消</span>
+      <span v-if="flag === 'received'" @click="receiptOrder(item.order_id)">确认收货</span>
       <span v-if="flag === 'comment'">评价</span>
     </div>
   </div>
@@ -53,11 +53,11 @@ export default {
     }
   },
   methods: {
-    async handelDelOrder (orderId) {
+    async cancelOrder (orderId) {
       const res = await delOrder(orderId)
       Toast(res.message)
     },
-    async handelConfirmReceived (orderId) {
+    async receiptOrder (orderId) {
       const res = await confirmReceived(orderId)
       Toast(res.message)
     }

@@ -43,6 +43,7 @@ export default {
         })
       })
       this.list = list.data
+      console.log(list.data)
     }
   },
 
